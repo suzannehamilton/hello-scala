@@ -3,10 +3,10 @@ import uk.co.suzannehamilton.helloscala.ObjectWithMethods
 
 class MethodCallSpec extends UnitSpec {
   "A parameterless method with parentheses" can "be called with parentheses" in {
-    assert(ObjectWithMethods.methodWithParentheses() == "Return value")
+    assert(ObjectWithMethods.methodWithParentheses() == ObjectWithMethods.RETURN_VALUE)
   }
 
   it can "be called without parentheses" in {
-    assert(ObjectWithMethods.methodWithParentheses == "Return value")
+    assert(ObjectWithMethods.methodWithParentheses == ObjectWithMethods.RETURN_VALUE)
   }
 }

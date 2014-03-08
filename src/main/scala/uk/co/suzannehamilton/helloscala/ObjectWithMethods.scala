@@ -1,5 +1,7 @@
 package uk.co.suzannehamilton.helloscala
 
 object ObjectWithMethods {
-  def methodWithParentheses(): String = "Return value"
+  val RETURN_VALUE = "Return value"
+
+  def methodWithParentheses(): String = RETURN_VALUE
 }
