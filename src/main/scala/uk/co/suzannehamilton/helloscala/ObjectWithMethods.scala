@@ -5,5 +5,5 @@ object ObjectWithMethods {
 
   def methodWithParentheses(): String = RETURN_VALUE
 
-  def methodWithoutParentheses: String = RETURN_VALUE
+  def methodWithoutParentheses: ClassWithApplyMethod = new ClassWithApplyMethod
 }

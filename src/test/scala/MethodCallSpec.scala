@@ -1,16 +1,22 @@
 import org.scalatest._
 import uk.co.suzannehamilton.helloscala.ObjectWithMethods
+import uk.co.suzannehamilton.helloscala.ClassWithApplyMethod
 
 class MethodCallSpec extends UnitSpec {
   "A parameterless method with parentheses" can "be called with parentheses" in {
-    assert(ObjectWithMethods.methodWithParentheses() == ObjectWithMethods.RETURN_VALUE)
+    ObjectWithMethods.methodWithParentheses()
   }
 
   it can "be called without parentheses" in {
-    assert(ObjectWithMethods.methodWithParentheses == ObjectWithMethods.RETURN_VALUE)
+    ObjectWithMethods.methodWithParentheses
   }
 
   "A parameterless method without parentheses" can "be called without parentheses" in {
-    assert(ObjectWithMethods.methodWithoutParentheses == ObjectWithMethods.RETURN_VALUE)
+    ObjectWithMethods.methodWithoutParentheses
+  }
+
+
+  it must "not be called with parentheses because that will be interpreted as calling apply() on the return value" in {
+    assert(ObjectWithMethods.methodWithoutParentheses() == ClassWithApplyMethod.RETURN_VALUE)
   }
 }
