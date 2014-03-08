@@ -9,4 +9,8 @@ class MethodCallSpec extends UnitSpec {
   it can "be called without parentheses" in {
     assert(ObjectWithMethods.methodWithParentheses == ObjectWithMethods.RETURN_VALUE)
   }
+
+  "A parameterless method without parentheses" can "be called without parentheses" in {
+    assert(ObjectWithMethods.methodWithoutParentheses == ObjectWithMethods.RETURN_VALUE)
+  }
 }
