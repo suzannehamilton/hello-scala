@@ -1,5 +1,5 @@
 package uk.co.suzannehamilton.helloscala
 
-case class CaseClass(fieldName: String) {
+case class CaseClass(firstField: String, secondField: Int) {
 
 }
