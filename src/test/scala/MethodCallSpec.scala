@@ -1,4 +1,3 @@
-import org.scalatest._
 import uk.co.suzannehamilton.helloscala.ObjectWithMethods
 import uk.co.suzannehamilton.helloscala.ClassWithApplyMethod
 
