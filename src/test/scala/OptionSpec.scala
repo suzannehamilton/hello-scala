@@ -10,7 +10,17 @@ class OptionSpec extends UnitSpec {
   }
 
   "an optional value" can "be taken apart with case statements" in {
-    assert(show(capitals get "France") == "Paris")
+    val value: String = "foo"
+    assert(show(Some(value)) == value)
+  }
+
+  it should "exist if created from a non-null value using the factory method" in {
+    val value: String = "foo"
+    assert(Option(value) == Some(value))
+  }
+
+  it should "be None if created from null using the factory method" in {
+    assert(Option(null) == None)
   }
 
   def show(x: Option[String]) = x match {
