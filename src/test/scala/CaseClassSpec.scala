@@ -14,4 +14,14 @@ class CaseClassSpec extends UnitSpec {
     assert(instanceOfCaseClass.firstField == firstField)
     assert(instanceOfCaseClass.secondField == secondField)
   }
+
+  it should "be equal to another instance with the same field values" in {
+    val firstField = "foo"
+    val secondField = 5
+
+    val instanceOfCaseClass = CaseClass(firstField, secondField)
+    val secondInstance = CaseClass(firstField, secondField)
+
+    assert(instanceOfCaseClass == secondInstance)
+  }
 }
