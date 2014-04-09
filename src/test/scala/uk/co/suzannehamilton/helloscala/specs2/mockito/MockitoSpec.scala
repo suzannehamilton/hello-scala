@@ -9,8 +9,19 @@ class MockitoSpec extends Specification with Mockito {
 
   "A method with a non-Unit return type can be verified" in {
     there was no(testObject).methodWithStringReturnValue
-//    testObject.methodWithStringReturnValue was notCalled
   }
+
+  /**
+   * This method of verification appears to be incorrect. It is mentioned in the original
+   * Specs docs: http://code.google.com/p/specs/wiki/UsingMockito
+   * but seems to be an error in the docs:
+   * https://groups.google.com/forum/#!topic/specs2-users/Jm5KD-303L8
+   *
+   * I cannot find it mentioned in the Specs2 docs at all.
+   *
+   * Use "there was one" or "there was no" syntax instead.
+   */
+  //    testObject.methodWithStringReturnValue was notCalled
 
 //  "A method which returns Unit" {
 //    "can be verified" in {
