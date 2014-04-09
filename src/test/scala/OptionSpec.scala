@@ -1,3 +1,5 @@
+import uk.co.suzannehamilton.helloscala.scalatest.UnitSpec
+
 /**
  * Helpful guide to the Option class:
  * http://danielwestheide.com/blog/2012/12/19/the-neophytes-guide-to-scala-part-5-the-option-type.html

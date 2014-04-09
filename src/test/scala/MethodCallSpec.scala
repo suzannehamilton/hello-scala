@@ -1,5 +1,5 @@
-import uk.co.suzannehamilton.helloscala.ObjectWithMethods
-import uk.co.suzannehamilton.helloscala.ClassWithApplyMethod
+import uk.co.suzannehamilton.helloscala.scalatest.UnitSpec
+import uk.co.suzannehamilton.helloscala.{ObjectWithMethods, ClassWithApplyMethod}
 
 class MethodCallSpec extends UnitSpec {
   "A parameterless method with parentheses" can "be called with parentheses" in {

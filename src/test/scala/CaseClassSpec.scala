@@ -1,4 +1,5 @@
 import uk.co.suzannehamilton.helloscala.CaseClass
+import uk.co.suzannehamilton.helloscala.scalatest.UnitSpec
 
 class CaseClassSpec extends UnitSpec {
   "A case class" can "be created without the 'new' keyword" in {
