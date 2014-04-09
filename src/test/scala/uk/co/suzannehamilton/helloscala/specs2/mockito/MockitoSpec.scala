@@ -23,11 +23,9 @@ class MockitoSpec extends Specification with Mockito {
    */
   //    testObject.methodWithStringReturnValue was notCalled
 
-//  "A method which returns Unit" {
-//    "can be verified" in {
-//      val testObject = mock[ClassWithMethods]
-//
-//      testObject.methodWithUnitReturnValue was notCalled
-//    }
-//  }
+  "A method which returns Unit can be verified" in  {
+    val testObject = mock[ClassWithMethods]
+
+    there was no(testObject).methodWithUnitReturnValue
+  }
 }
