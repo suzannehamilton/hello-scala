@@ -15,47 +15,49 @@ class TimerSpec extends Specification {
     val actor = TestActorRef[ActorWithScheduledMessages]
   }
 
-  "Actor responds to pings" in new Scope {
-    actor ! Ping()
+  "Actor" should  {
+    "responds to pings" in new Scope {
+      actor ! Ping()
 
-    expectMsg("pong")
-  }
+      expectMsg("pong")
+    }
 
-  "Actor can be told to expire" in new Scope {
-    actor ! Expire()
+    "expire when sent an Expire message" in new Scope {
+      actor ! Expire()
 
-    actor ! Ping()
+      actor ! Ping()
 
-    expectNoMsg()
-  }
+      expectNoMsg()
+    }
 
-  "Scheduling expiry should kill the actor after a delay" in new Scope {
-    actor ! ScheduleExpiry(new FiniteDuration(50, MILLISECONDS))
+    "expire after a delay when sent an ScheduleExpiry message" in new Scope {
+      actor ! ScheduleExpiry(new FiniteDuration(50, MILLISECONDS))
 
-    Thread.sleep(10)
+      Thread.sleep(10)
 
-    actor ! Ping()
-    expectMsg("pong")
+      actor ! Ping()
+      expectMsg("pong")
 
-    Thread.sleep(100)
+      Thread.sleep(100)
 
-    actor ! Ping()
+      actor ! Ping()
 
-    expectNoMsg()
-  }
+      expectNoMsg()
+    }
 
-  "Scheduling poison pill should kill the actor after a delay" in new Scope {
-    actor ! SchedulePoisonPill(new FiniteDuration(50, MILLISECONDS))
+    "expire after a delay when sent a scheduled PoisonPill" in new Scope {
+      actor ! SchedulePoisonPill(new FiniteDuration(50, MILLISECONDS))
 
-    Thread.sleep(10)
+      Thread.sleep(10)
 
-    actor ! Ping()
-    expectMsg("pong")
+      actor ! Ping()
+      expectMsg("pong")
 
-    Thread.sleep(100)
+      Thread.sleep(100)
 
-    actor ! Ping()
+      actor ! Ping()
 
-    expectNoMsg()
+      expectNoMsg()
+    }
   }
 }
