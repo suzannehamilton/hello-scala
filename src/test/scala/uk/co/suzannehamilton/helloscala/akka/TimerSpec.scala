@@ -2,7 +2,7 @@ package uk.co.suzannehamilton.helloscala.akka
 
 import scala.concurrent.duration._
 import uk.co.suzannehamilton.helloscala.specs2.Specification
-import akka.actor.{PoisonPill, ActorSystem}
+import akka.actor.{ActorIdentity, Identify, PoisonPill, ActorSystem}
 import akka.testkit.{TestActorRef, ImplicitSender, TestKit}
 import uk.co.suzannehamilton.helloscala.akka.ActorMessages._
 
@@ -14,6 +14,8 @@ class TimerSpec extends Specification {
 
     val actor = TestActorRef[ActorWithScheduledMessages]
     val fsmActor = TestActorRef[FsmActorWithScheduledMessages]
+
+    val correlator: String = "someCorrelator"
   }
 
   "Actor" should {
@@ -115,6 +117,24 @@ class TimerSpec extends Specification {
       // [akka://default/user/$$d] unhandled event PoisonPill in state Active
       expectNoMsg()
     }.pendingUntilFixed("Work out whether the unhandled PoisonPill is a bug or a misunderstanding " +
-      "of how to use PoisonPill")
+      "of how to use setTimer")
+
+    "responds to an Identify request" in new Scope {
+      fsmActor ! Identify(correlator)
+
+      val response = expectMsgClass(classOf[ActorIdentity])
+      response.correlationId mustEqual correlator
+    }
+
+    "respond to a scheduled 'Identify' messages" in new Scope {
+      fsmActor ! ScheduleIdentify(new FiniteDuration(5, MILLISECONDS), correlator)
+
+      // TODO: This step fails because the scheduled Identify message was ignored. Instead, this DEBUG issue
+      // is logged:
+      // [akka://default/user/$$b] processing Event(Identify(someCorrelator),StateData) from timer identify
+      val response = expectMsgClass(classOf[ActorIdentity])
+      response.correlationId mustEqual correlator
+    }.pendingUntilFixed("Work out whether the unhandled Identify message is a bug or a misunderstanding " +
+      "of how to use setTimer")
   }
 }

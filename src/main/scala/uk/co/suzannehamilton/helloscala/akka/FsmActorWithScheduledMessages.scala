@@ -1,8 +1,13 @@
 package uk.co.suzannehamilton.helloscala.akka
 
-import akka.actor.{PoisonPill, LoggingFSM, ActorLogging, Actor}
+import akka.actor._
 import uk.co.suzannehamilton.helloscala.akka.FsmActorWithScheduledMessages._
 import uk.co.suzannehamilton.helloscala.akka.ActorMessages._
+import uk.co.suzannehamilton.helloscala.akka.ActorMessages.SchedulePoisonPill
+import uk.co.suzannehamilton.helloscala.akka.ActorMessages.Ping
+import uk.co.suzannehamilton.helloscala.akka.ActorMessages.ScheduleExpiry
+import uk.co.suzannehamilton.helloscala.akka.ActorMessages.Expire
+import uk.co.suzannehamilton.helloscala.akka.ActorMessages.ScheduleIdentify
 
 class FsmActorWithScheduledMessages
   extends Actor
@@ -23,6 +28,14 @@ class FsmActorWithScheduledMessages
     }
     case Event(poisonPillScheduleMessage: SchedulePoisonPill, _) => {
       setTimer("poisonPill", PoisonPill, poisonPillScheduleMessage.delay, false)
+      stay()
+    }
+    case Event(scheduleIdentifyMessage: ScheduleIdentify, _) => {
+      setTimer(
+        "identify",
+        Identify(scheduleIdentifyMessage.correlator),
+        scheduleIdentifyMessage.delay,
+        false)
       stay()
     }
   }

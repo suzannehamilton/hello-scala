@@ -7,4 +7,5 @@ object ActorMessages {
   case class Ping()
   case class ScheduleExpiry(delay: FiniteDuration)
   case class SchedulePoisonPill(delay: FiniteDuration)
+  case class ScheduleIdentify(delay: FiniteDuration, correlator: String)
 }
