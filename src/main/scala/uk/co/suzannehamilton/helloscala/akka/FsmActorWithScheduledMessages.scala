@@ -21,6 +21,10 @@ class FsmActorWithScheduledMessages
       setTimer("expiry", Expire(), expiryScheduleMessage.delay, false)
       stay()
     }
+    case Event(poisonPillScheduleMessage: SchedulePoisonPill, _) => {
+      setTimer("poisonPill", PoisonPill, poisonPillScheduleMessage.delay, false)
+      stay()
+    }
   }
 }
 
