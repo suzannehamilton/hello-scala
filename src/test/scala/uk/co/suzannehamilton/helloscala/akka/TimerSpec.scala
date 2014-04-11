@@ -4,7 +4,7 @@ import scala.concurrent.duration._
 import uk.co.suzannehamilton.helloscala.specs2.Specification
 import akka.actor.ActorSystem
 import akka.testkit.{TestActorRef, ImplicitSender, TestKit}
-import uk.co.suzannehamilton.helloscala.akka.ActorWithScheduledMessages._
+import uk.co.suzannehamilton.helloscala.akka.ActorMessages._
 
 class TimerSpec extends Specification {
   abstract class Scope
