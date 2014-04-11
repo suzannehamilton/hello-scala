@@ -1,6 +1,6 @@
 package uk.co.suzannehamilton.helloscala.akka
 
-import akka.actor.{LoggingFSM, ActorLogging, Actor}
+import akka.actor.{PoisonPill, LoggingFSM, ActorLogging, Actor}
 import uk.co.suzannehamilton.helloscala.akka.FsmActorWithScheduledMessages._
 import uk.co.suzannehamilton.helloscala.akka.ActorMessages._
 
@@ -9,10 +9,18 @@ class FsmActorWithScheduledMessages
   with LoggingFSM[State, Data]
   with ActorLogging {
 
-  startWith(Idle, StateData)
+  startWith(Active, StateData)
 
-  when(Idle) {
+  when(Active) {
     case Event(ping: Ping, _) => stay().replying("pong")
+    case Event(expiryMessage: Expire, _) => {
+      self ! PoisonPill
+      stay()
+    }
+    case Event(expiryScheduleMessage: ScheduleExpiry, _) => {
+      setTimer("expiry", Expire(), expiryScheduleMessage.delay, false)
+      stay()
+    }
   }
 }
 
@@ -21,6 +29,5 @@ object FsmActorWithScheduledMessages {
   case object StateData extends Data
 
   sealed trait State
-  case object Idle extends State
   case object Active extends State
 }

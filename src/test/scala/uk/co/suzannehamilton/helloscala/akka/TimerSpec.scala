@@ -24,9 +24,7 @@ class TimerSpec extends Specification {
 
     "expire when sent an Expire message" in new Scope {
       actor ! Expire()
-
       actor ! Ping()
-
       expectNoMsg()
     }
 
@@ -65,6 +63,27 @@ class TimerSpec extends Specification {
     "respond to pings" in new Scope {
       fsmActor ! Ping()
       expectMsg("pong")
+    }
+
+    "expire when sent an Expire message" in new Scope {
+      fsmActor ! Expire()
+      fsmActor ! Ping()
+      expectNoMsg()
+    }
+
+    "expire when sent an expire message" in new Scope {
+      fsmActor ! ScheduleExpiry(new FiniteDuration(50, MILLISECONDS))
+
+      Thread.sleep(10)
+
+      fsmActor ! Ping()
+      expectMsg("pong")
+
+      Thread.sleep(100)
+
+      fsmActor ! Ping()
+
+      expectNoMsg()
     }
   }
 }
