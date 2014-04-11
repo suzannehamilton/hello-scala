@@ -13,12 +13,12 @@ class TimerSpec extends Specification {
     with ImplicitSender {
 
     val actor = TestActorRef[ActorWithScheduledMessages]
+    val fsmActor = TestActorRef[FsmActorWithScheduledMessages]
   }
 
-  "Actor" should  {
-    "responds to pings" in new Scope {
+  "Actor" should {
+    "respond to pings" in new Scope {
       actor ! Ping()
-
       expectMsg("pong")
     }
 
@@ -58,6 +58,13 @@ class TimerSpec extends Specification {
       actor ! Ping()
 
       expectNoMsg()
+    }
+  }
+
+  "FSM actor" should {
+    "respond to pings" in new Scope {
+      fsmActor ! Ping()
+      expectMsg("pong")
     }
   }
 }
