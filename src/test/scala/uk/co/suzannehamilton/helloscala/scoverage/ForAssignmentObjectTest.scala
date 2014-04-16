@@ -7,4 +7,9 @@ class ForAssignmentObjectTest extends FlatSpec with OneInstancePerTest {
     val result = ForAssignmentObject.splitId("a1")
     assert(result.isSuccess)
   }
+
+  it should "return an error if the ID is invalid" in {
+    val result = ForAssignmentObject.splitId("")
+    assert(result.isFailure)
+  }
 }
