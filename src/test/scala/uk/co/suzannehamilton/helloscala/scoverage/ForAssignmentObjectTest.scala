@@ -13,13 +13,13 @@ class ForAssignmentObjectTest extends FlatSpec with OneInstancePerTest {
     assert(result.isFailure)
   }
 
-  "Flatmap version" should "split a valid ID" in {
-    val result = ForAssignmentObject.splitIdUsingFlatMap("a1")
+  "Expanded version" should "split a valid ID" in {
+    val result = ForAssignmentObject.splitIdUsingMap("a1")
     assert(result.isSuccess)
   }
 
   it should "return an error if the ID is invalid" in {
-    val result = ForAssignmentObject.splitIdUsingFlatMap("")
+    val result = ForAssignmentObject.splitIdUsingMap("")
     assert(result.isFailure)
   }
 }

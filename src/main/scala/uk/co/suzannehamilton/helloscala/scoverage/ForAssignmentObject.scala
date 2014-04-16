@@ -9,10 +9,9 @@ object ForAssignmentObject {
     } yield (prefix, suffix)
   }
 
-  def splitIdUsingFlatMap(id: String): Try[(String, String)] = {
-    (parseId(id)).map {
-      case (prefix, suffix) => (prefix, suffix)
-    }
+  // Identical to the method above, but for is expanded to map
+  def splitIdUsingMap(id: String): Try[(String, String)] = parseId(id).map {
+    case (prefix, suffix) => (prefix, suffix)
   }
 
   private def parseId(id: String): Try[(String, String)] = {
