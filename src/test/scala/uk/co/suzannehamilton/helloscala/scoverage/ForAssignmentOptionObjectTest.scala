@@ -4,7 +4,12 @@ import org.scalatest.FlatSpec
 
 class ForAssignmentOptionObjectTest extends FlatSpec {
   "ForAssigmentObject" should "return a value" in {
-    val foo = ForAssignmentOptionObject.doSomething
-    assert(foo === Some("foo"))
+    val result = ForAssignmentOptionObject.getOptionValue
+    assert(result === Some("foo"))
+  }
+
+  "Expanded ForAssigmentObject" should "return a value" in {
+    val result = ForAssignmentOptionObject.getOptionValueExpandedVersion
+    assert(result === Some("foo"))
   }
 }
