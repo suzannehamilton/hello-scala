@@ -1,5 +1,6 @@
 package uk.co.suzannehamilton.helloscala.akka
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import akka.pattern.{AskTimeoutException, ask}
 import uk.co.suzannehamilton.helloscala.specs2.Specification
 import akka.testkit.{TestActorRef, ImplicitSender, TestKit}
@@ -8,7 +9,8 @@ import uk.co.suzannehamilton.helloscala.akka.ActorMessages._
 import akka.util.Timeout
 import scala.concurrent.duration.FiniteDuration
 import java.util.concurrent.TimeUnit
-import scala.util.Success
+import scala.util.{Try, Failure, Success}
+import scala.concurrent.Await
 
 class AskTimeoutSpec extends Specification {
   abstract class Scope
@@ -37,10 +39,14 @@ class AskTimeoutSpec extends Specification {
       response.value.get mustEqual Success(Pong)
     }
 
-    "not respond to unknown messages" in new Scope {
-      val response = actor ? "Some invalid message"
+    "throw AskTimeoutException if the ask does not respond" in new Scope {
+      val response = Try {
+        Await.result(
+          actor ? "Some invalid message",
+          new FiniteDuration(2, TimeUnit.SECONDS))
+      }
 
-      val result = response.value mustEqual None
+      response must beAnInstanceOf[Failure[AskTimeoutException]]
     }
   }
 }
