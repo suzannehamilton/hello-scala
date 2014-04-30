@@ -3,8 +3,8 @@ package uk.co.suzannehamilton.helloscala.akka
 import scala.concurrent.duration.FiniteDuration
 
 object ActorMessages {
-  case class Expire()
-  case class Ping()
+  case object Expire
+  case object Ping
   case object Pong
   case class ScheduleExpiry(delay: FiniteDuration)
   case class SchedulePoisonPill(delay: FiniteDuration)

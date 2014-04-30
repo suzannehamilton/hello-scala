@@ -20,13 +20,13 @@ class TimerSpec extends Specification {
 
   "Actor" should {
     "respond to pings" in new Scope {
-      actor ! Ping()
+      actor ! Ping
       expectMsg("pong")
     }
 
     "expire when sent an Expire message" in new Scope {
-      actor ! Expire()
-      actor ! Ping()
+      actor ! Expire
+      actor ! Ping
       expectNoMsg()
     }
 
@@ -35,12 +35,12 @@ class TimerSpec extends Specification {
 
       Thread.sleep(10)
 
-      actor ! Ping()
+      actor ! Ping
       expectMsg("pong")
 
       Thread.sleep(100)
 
-      actor ! Ping()
+      actor ! Ping
 
       expectNoMsg()
     }
@@ -50,12 +50,12 @@ class TimerSpec extends Specification {
 
       Thread.sleep(10)
 
-      actor ! Ping()
+      actor ! Ping
       expectMsg("pong")
 
       Thread.sleep(100)
 
-      actor ! Ping()
+      actor ! Ping
 
       expectNoMsg()
     }
@@ -63,25 +63,25 @@ class TimerSpec extends Specification {
 
   "FSM actor" should {
     "respond to pings" in new Scope {
-      fsmActor ! Ping()
+      fsmActor ! Ping
       expectMsg("pong")
     }
 
     "expire when sent an Expire message" in new Scope {
-      fsmActor ! Expire()
-      fsmActor ! Ping()
+      fsmActor ! Expire
+      fsmActor ! Ping
       expectNoMsg()
     }
 
     "expire when sent a poison pill" in new Scope {
       fsmActor ! PoisonPill
-      fsmActor ! Ping()
+      fsmActor ! Ping
       expectNoMsg()
     }
 
     "expire when sent a poison pill instance" in new Scope {
       fsmActor ! PoisonPill.getInstance
-      fsmActor ! Ping()
+      fsmActor ! Ping
       expectNoMsg()
     }
 
@@ -90,12 +90,12 @@ class TimerSpec extends Specification {
 
       Thread.sleep(10)
 
-      fsmActor ! Ping()
+      fsmActor ! Ping
       expectMsg("pong")
 
       Thread.sleep(100)
 
-      fsmActor ! Ping()
+      fsmActor ! Ping
 
       expectNoMsg()
     }
@@ -105,12 +105,12 @@ class TimerSpec extends Specification {
 
       Thread.sleep(10)
 
-      fsmActor ! Ping()
+      fsmActor ! Ping
       expectMsg("pong")
 
       Thread.sleep(100)
 
-      fsmActor ! Ping()
+      fsmActor ! Ping
 
       // TODO: This step fails because the scheduled poison pill did not actually kill the actor. Instead,
       // this DEBUG issue is logged:

@@ -3,11 +3,6 @@ package uk.co.suzannehamilton.helloscala.akka
 import akka.actor._
 import uk.co.suzannehamilton.helloscala.akka.FsmActorWithScheduledMessages._
 import uk.co.suzannehamilton.helloscala.akka.ActorMessages._
-import uk.co.suzannehamilton.helloscala.akka.ActorMessages.SchedulePoisonPill
-import uk.co.suzannehamilton.helloscala.akka.ActorMessages.Ping
-import uk.co.suzannehamilton.helloscala.akka.ActorMessages.ScheduleExpiry
-import uk.co.suzannehamilton.helloscala.akka.ActorMessages.Expire
-import uk.co.suzannehamilton.helloscala.akka.ActorMessages.ScheduleIdentify
 
 class FsmActorWithScheduledMessages
   extends Actor
@@ -17,13 +12,13 @@ class FsmActorWithScheduledMessages
   startWith(Active, StateData)
 
   when(Active) {
-    case Event(ping: Ping, _) => stay().replying("pong")
-    case Event(expiryMessage: Expire, _) => {
+    case Event(Ping, _) => stay().replying("pong")
+    case Event(Expire, _) => {
       self ! PoisonPill
       stay()
     }
     case Event(expiryScheduleMessage: ScheduleExpiry, _) => {
-      setTimer("expiry", Expire(), expiryScheduleMessage.delay, false)
+      setTimer("expiry", Expire, expiryScheduleMessage.delay, false)
       stay()
     }
     case Event(poisonPillScheduleMessage: SchedulePoisonPill, _) => {

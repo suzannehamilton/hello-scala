@@ -18,7 +18,7 @@ class AskTimeoutSpec extends Specification {
 
   "Actor" should {
     "respond to pings" in new Scope {
-      actor ! Ping()
+      actor ! Ping
       expectMsg(Pong)
     }
   }
