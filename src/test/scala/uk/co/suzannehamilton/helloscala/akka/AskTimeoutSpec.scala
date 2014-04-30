@@ -40,13 +40,11 @@ class AskTimeoutSpec extends Specification {
     }
 
     "throw AskTimeoutException if the ask does not respond" in new Scope {
-      val response = Try {
-        Await.result(
-          actor ? "Some invalid message",
-          new FiniteDuration(2, TimeUnit.SECONDS))
-      }
+      val response = actor ? "Some invalid message"
 
-      response must beAnInstanceOf[Failure[AskTimeoutException]]
+      Await.ready(response, new FiniteDuration(2, TimeUnit.SECONDS))
+
+      response.value.get must beAnInstanceOf[Failure[AskTimeoutException]]
     }
   }
 }
