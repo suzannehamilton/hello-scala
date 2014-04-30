@@ -1,6 +1,6 @@
 package uk.co.suzannehamilton.helloscala.akka
 
-import akka.pattern.ask
+import akka.pattern.{AskTimeoutException, ask}
 import uk.co.suzannehamilton.helloscala.specs2.Specification
 import akka.testkit.{TestActorRef, ImplicitSender, TestKit}
 import akka.actor.{Status, ActorSystem}
@@ -8,7 +8,7 @@ import uk.co.suzannehamilton.helloscala.akka.ActorMessages._
 import akka.util.Timeout
 import scala.concurrent.duration.FiniteDuration
 import java.util.concurrent.TimeUnit
-import scala.util.Success
+import scala.util.{Failure, Success}
 
 class AskTimeoutSpec extends Specification {
   abstract class Scope
@@ -28,11 +28,19 @@ class AskTimeoutSpec extends Specification {
       actor ! Ping
       expectMsg(Pong)
     }
+  }
 
-    "respond to pings sent in an ask" in new Scope {
+  "Ask sent to actor" should {
+    "respond to pings" in new Scope {
       val response = actor ? Ping
 
       response.value.get mustEqual Success(Pong)
+    }
+
+    "not respond to unknown messages" in new Scope {
+      val response = actor ? "Some invalid message"
+
+      val result = response.value mustEqual None
     }
   }
 }
