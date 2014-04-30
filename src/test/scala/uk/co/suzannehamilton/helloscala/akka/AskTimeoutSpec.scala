@@ -8,7 +8,7 @@ import uk.co.suzannehamilton.helloscala.akka.ActorMessages._
 import akka.util.Timeout
 import scala.concurrent.duration.FiniteDuration
 import java.util.concurrent.TimeUnit
-import scala.util.{Failure, Success}
+import scala.util.Success
 
 class AskTimeoutSpec extends Specification {
   abstract class Scope
