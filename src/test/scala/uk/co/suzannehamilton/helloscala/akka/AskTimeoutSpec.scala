@@ -4,7 +4,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import akka.pattern.{AskTimeoutException, ask}
 import uk.co.suzannehamilton.helloscala.specs2.Specification
 import akka.testkit.{TestActorRef, ImplicitSender, TestKit}
-import akka.actor.{Status, ActorSystem}
+import akka.actor.{PoisonPill, Status, ActorSystem}
 import uk.co.suzannehamilton.helloscala.akka.ActorMessages._
 import akka.util.Timeout
 import scala.concurrent.duration.FiniteDuration
@@ -41,6 +41,18 @@ class AskTimeoutSpec extends Specification {
 
     "throw AskTimeoutException if the ask does not respond" in new Scope {
       val response = actor ? "Some invalid message"
+
+      Await.ready(response, new FiniteDuration(2, TimeUnit.SECONDS))
+
+      response.value.get must beAnInstanceOf[Failure[AskTimeoutException]]
+    }
+
+    "throw AskTimeoutException if the actor has died" in new Scope {
+      watch(actor)
+      actor ! PoisonPill
+      expectTerminated(actor, new FiniteDuration(200, TimeUnit.MILLISECONDS))
+
+      val response = actor ? Ping
 
       Await.ready(response, new FiniteDuration(2, TimeUnit.SECONDS))
 
